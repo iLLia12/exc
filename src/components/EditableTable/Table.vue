@@ -72,6 +72,7 @@
 <script>
 import EditableCell from "./EditableCell.vue";
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 const mapLabelsToProps = {
   Buy: "buy",
@@ -211,11 +212,11 @@ export default {
     }
   },
   mounted() {
-    fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
-      .then(response => response.json())
+    axios
+      .get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
       .then(res => {
         let options = [];
-        this.tableData = res.map(o => {
+        this.tableData = res.data.map(o => {
           if (!options.includes(o.base_ccy)) options.push(o.base_ccy);
           if (!options.includes(o.ccy)) options.push(o.ccy);
           return { ...o, origin: o };

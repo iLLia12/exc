@@ -1,8 +1,20 @@
 import { mount } from "@vue/test-utils";
 import Table from "@/components/EditableTable/Table.vue";
 
-describe("ParentComponent", () => {
+global.localStorage = {
+  errors_counter: { value: 1 },
+  getItem: function(e) {
+    return this[e];
+  },
+  setItem: function(e) {
+    return { errors_counter: { value: 1 }, test: e };
+  }
+};
+
+describe("Table", () => {
   it("displays 'Emitted!' when custom event is emitted", () => {
+    const anotherMethodMock = jest.fn();
+
     let editableRow = {
       base_ccy: "UAH",
       buy: "27.95000",
@@ -28,7 +40,11 @@ describe("ParentComponent", () => {
         hint: ""
       }
     });
+    wrapper.setMethods({
+      getErrorCounter: anotherMethodMock,
+      checkErrorCounter: anotherMethodMock
+    });
 
-    // expect(wrapper.vm.validate()).toBe(false);
+    expect(wrapper.vm.validate()).toBe(false);
   });
 });
