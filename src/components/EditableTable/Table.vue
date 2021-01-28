@@ -210,25 +210,25 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
       .then(response => response.json())
       .then(res => {
         let options = [];
         this.tableData = res.map(o => {
-          if (!options.includes(o.base_ccy)) options.push(o.base_ccy)
-          if (!options.includes(o.ccy)) options.push(o.ccy)
-          return {...o,origin: o};
+          if (!options.includes(o.base_ccy)) options.push(o.base_ccy);
+          if (!options.includes(o.ccy)) options.push(o.ccy);
+          return { ...o, origin: o };
         });
         this.setCurrencies(this.tableData);
         this.loading = false;
         options = options.map(o => {
           return {
-            value:o,
-            label:o,
-            disabled:false
-          }
-        })
+            value: o,
+            label: o,
+            disabled: false
+          };
+        });
       });
     this.checkErrorCounter();
   },

@@ -2,23 +2,27 @@ export default {
   namespaced: true,
   state: {
     currencies: [],
-    currencyOptions: [{
-      label: "USD",
-      value: "USD",
-      disabled: false,
-    },{
-      label: "EUR",
-      value: "EUR",
-      disabled: false,
-    },{
-      label: "UAH",
-      value: "UAH",
-      disabled: false,
-    },{
-      label: "BTC",
-      value: "BTC",
-      disabled: false,
-    },
+    currencyOptions: [
+      {
+        label: "USD",
+        value: "USD",
+        disabled: false
+      },
+      {
+        label: "EUR",
+        value: "EUR",
+        disabled: false
+      },
+      {
+        label: "UAH",
+        value: "UAH",
+        disabled: false
+      },
+      {
+        label: "BTC",
+        value: "BTC",
+        disabled: false
+      }
     ]
   },
   getters: {

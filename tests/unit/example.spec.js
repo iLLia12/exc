@@ -1,13 +1,34 @@
-import { expect } from "chai";
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mount } from "@vue/test-utils";
+import Table from "@/components/EditableTable/Table.vue";
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
+describe("ParentComponent", () => {
+  it("displays 'Emitted!' when custom event is emitted", () => {
+    let editableRow = {
+      base_ccy: "UAH",
+      buy: "27.95000",
+      ccy: "USD",
+      origin: {
+        base_ccy: "UAH",
+        buy: "27.95000",
+        ccy: "USD",
+        sale: "28.35000"
+      },
+      sale: "28.35000"
+    };
+
+    let rowBuffer = { ...editableRow };
+
+    const wrapper = mount(Table);
+    wrapper.setData({
+      rowBuffer: rowBuffer,
+      editableRow: editableRow,
+      columnName: "buy",
+      validator: {
+        isValid: false,
+        hint: ""
+      }
     });
-    expect(wrapper.text()).to.include(msg);
+
+    // expect(wrapper.vm.validate()).toBe(false);
   });
 });
