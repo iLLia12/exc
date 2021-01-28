@@ -99,7 +99,8 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getCurrencies: "converter/getCurrencies"
+      getCurrencies: "converter/getCurrencies",
+      getCurrencyOptions: "converter/getCurrencyOptions"
     }),
     saveCellValueIconClass() {
       return {
@@ -116,7 +117,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("converter", ["setCurrencies"]),
+    ...mapActions("converter", ["setCurrencies", "setCurrencyOptions"]),
     isEditIconVisible(scope, columnName) {
       return (
         this.hoveredRow &&
@@ -213,14 +214,21 @@ export default {
     fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
       .then(response => response.json())
       .then(res => {
+        let options = [];
         this.tableData = res.map(o => {
-          return {
-            ...o,
-            origin: o
-          };
+          if (!options.includes(o.base_ccy)) options.push(o.base_ccy)
+          if (!options.includes(o.ccy)) options.push(o.ccy)
+          return {...o,origin: o};
         });
         this.setCurrencies(this.tableData);
         this.loading = false;
+        options = options.map(o => {
+          return {
+            value:o,
+            label:o,
+            disabled:false
+          }
+        })
       });
     this.checkErrorCounter();
   },
