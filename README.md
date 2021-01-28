@@ -1,5 +1,7 @@
 # exc
 
+[DEMO](http://64.227.122.52/)
+
 ## Project setup
 ```
 npm install
