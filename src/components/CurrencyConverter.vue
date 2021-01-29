@@ -64,6 +64,7 @@
             <div class="w-stretch">
               <div class="text-align-left fs14">Get</div>
               <el-input
+                disabled
                 type="number"
                 placeholder="Please input"
                 v-model="converter.valueToGet"
