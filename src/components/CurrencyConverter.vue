@@ -276,5 +276,8 @@ export default {
   .calculate-btn {
     width: 100%;
   }
+  .currency-converter {
+    padding-top: 20px;
+  }
 }
 </style>

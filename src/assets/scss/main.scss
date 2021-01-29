@@ -23,21 +23,32 @@ body {
 }
 .content-container {
   height: calc(100vh - 250px);
-  min-height: 600px;
 }
 .container-inner {
   max-width: 1290px;
   padding: 20px;
   margin: 0 auto;
+  min-height: 484px;
 }
 .footer {
   height: 100px;
   background: $--color-grey;
- padding-top: 30px;
+  padding-top: 30px;
 }
 .pointer-icon {
   &:hover {
     font-weight: 800;
+  }
+}
+
+@media (max-height: 800px) {
+  .container-inner {
+    height: calc(484px + 100px);
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 }
 
