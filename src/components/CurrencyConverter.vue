@@ -64,7 +64,6 @@
             <div class="w-stretch">
               <div class="text-align-left fs14">Get</div>
               <el-input
-                disabled
                 type="number"
                 placeholder="Please input"
                 v-model="converter.valueToGet"
@@ -139,6 +138,7 @@ export default {
       let currencies = this.getCurrencies;
       const currency1 = this.converter.currencyToChange;
       const currency2 = this.converter.currencyToGet;
+
       /**
        * One to one
        **/
@@ -155,10 +155,10 @@ export default {
         }
         return true;
       });
+
       /**
        * Through pivot currencies
        **/
-
       //UAH to BTC
       if (currency1 === "UAH" && currency2 === "BTC") {
         let found = currencies.find(
