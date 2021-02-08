@@ -100,22 +100,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Converter from "../services/converter";
+
+const CONVERTER = {
+  valueToChange: "",
+  valueToGet: "",
+  currencyToChange: "",
+  currencyToGet: ""
+};
 
 export default {
   name: "CurrencyConverter",
   data: () => ({
-    converter: {
-      valueToChange: "",
-      valueToGet: "",
-      currencyToChange: "",
-      currencyToGet: ""
-    },
-    buffer: {
-      valueToChange: "",
-      valueToGet: "",
-      currencyToChange: "",
-      currencyToGet: ""
-    },
+    converter: CONVERTER,
+    buffer: CONVERTER,
     options: [],
     isExchangeDisabled: false
   }),
@@ -140,100 +138,12 @@ export default {
       const currency1 = this.converter.currencyToChange;
       const currency2 = this.converter.currencyToGet;
 
-      /**
-       * One to one
-       **/
-      currencies.every(o => {
-        if (o["base_ccy"] === currency1 && o["ccy"] === currency2) {
-          this.converter.valueToGet =
-            this.converter.valueToChange / parseFloat(o["sale"]);
-          return false;
-        }
-        if (o["base_ccy"] === currency2 && o["ccy"] === currency1) {
-          this.converter.valueToGet =
-            this.converter.valueToChange * parseFloat(o["buy"]);
-          return false;
-        }
-        return true;
-      });
-
-      /**
-       * Through pivot currencies
-       **/
-      //UAH to BTC
-      if (currency1 === "UAH" && currency2 === "BTC") {
-        let found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        let a = this.converter.valueToChange / parseFloat(found["sale"]);
-        found = currencies.find(
-          element => element["ccy"] === "BTC" && element["base_ccy"] === "USD"
-        );
-        this.converter.valueToGet = a / parseFloat(found["sale"]);
-      }
-      //BTC to UAH
-      if (currency1 === "BTC" && currency2 === "UAH") {
-        let found = currencies.find(
-          element => element["ccy"] === "BTC" && element["base_ccy"] === "USD"
-        );
-        let a = this.converter.valueToChange * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        this.converter.valueToGet = a * parseFloat(found["buy"]);
-      }
-      //BTC to EUR
-      if (currency1 === "BTC" && currency2 === "EUR") {
-        let found = currencies.find(
-          element => element["ccy"] === "BTC" && element["base_ccy"] === "USD"
-        );
-        let a = this.converter.valueToChange * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        a = a * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "EUR" && element["base_ccy"] === "UAH"
-        );
-        this.converter.valueToGet = a / parseFloat(found["sale"]);
-      }
-      //EUR to BTC
-      if (currency1 === "EUR" && currency2 === "BTC") {
-        let found = currencies.find(
-          element => element["ccy"] === "EUR" && element["base_ccy"] === "UAH"
-        );
-        let a = this.converter.valueToChange * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        a = a / parseFloat(found["sale"]);
-        found = currencies.find(
-          element => element["ccy"] === "BTC" && element["base_ccy"] === "USD"
-        );
-        this.converter.valueToGet = a / parseFloat(found["sale"]);
-      }
-      //USD to EUR
-      if (currency1 === "USD" && currency2 === "EUR") {
-        let found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        let a = this.converter.valueToChange * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "EUR" && element["base_ccy"] === "UAH"
-        );
-        this.converter.valueToGet = a / parseFloat(found["sale"]);
-      }
-      //EUR to USD
-      if (currency1 === "EUR" && currency2 === "USD") {
-        let found = currencies.find(
-          element => element["ccy"] === "EUR" && element["base_ccy"] === "UAH"
-        );
-        let a = this.converter.valueToChange * parseFloat(found["buy"]);
-        found = currencies.find(
-          element => element["ccy"] === "USD" && element["base_ccy"] === "UAH"
-        );
-        this.converter.valueToGet = a / parseFloat(found["sale"]);
-      }
+      this.converter.valueToGet = new Converter(
+        currencies,
+        currency1,
+        currency2,
+        this.converter.valueToChange
+      ).get();
     }
   },
   watch: {

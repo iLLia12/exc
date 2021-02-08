@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { mount } from "@vue/test-utils";
 import CurrencyConverter from "@/components/CurrencyConverter.vue";
 import store from "@/store";
+import { CURRENCIES_RATE, CONVERTER } from "../data";
 
 describe("CurrencyConverter.vue", () => {
   it("converters UAH to BTC successfully", () => {
@@ -9,66 +10,12 @@ describe("CurrencyConverter.vue", () => {
       store,
       data() {
         return {
-          converter: {
-            valueToChange: "1000000",
-            valueToGet: "", //1.0487014444071623
-            currencyToChange: "UAH",
-            currencyToGet: "BTC"
-          }
+          converter: CONVERTER
         };
       },
       computed: {
         getCurrencies() {
-          return [
-            {
-              base_ccy: "UAH",
-              buy: "27.95000",
-              ccy: "USD",
-              origin: {
-                base_ccy: "UAH",
-                buy: "27.95000",
-                ccy: "USD",
-                sale: "28.35000"
-              },
-              sale: "28.35000"
-            },
-            {
-              base_ccy: "UAH",
-              buy: "33.80000",
-              ccy: "EUR",
-              origin: {
-                base_ccy: "UAH",
-                buy: "33.80000",
-                ccy: "EUR",
-                sale: "34.40000"
-              },
-              sale: "34.40000"
-            },
-            {
-              base_ccy: "UAH",
-              buy: "0.36500",
-              ccy: "RUR",
-              origin: {
-                base_ccy: "UAH",
-                buy: "0.36500",
-                ccy: "RUR",
-                sale: "0.40000"
-              },
-              sale: "0.40000"
-            },
-            {
-              base_ccy: "USD",
-              buy: "30553.3775",
-              ccy: "BTC",
-              origin: {
-                base_ccy: "USD",
-                buy: "30553.3775",
-                ccy: "BTC",
-                sale: "33769.5225"
-              },
-              sale: "33769.5225"
-            }
-          ];
+          return CURRENCIES_RATE;
         }
       },
       stubs: {
@@ -83,6 +30,6 @@ describe("CurrencyConverter.vue", () => {
       }
     });
     wrapper.vm.calculate();
-    expect(wrapper.vm.converter.valueToGet.toFixed(2)).to.equal('1.04');
+    expect(wrapper.vm.converter.valueToGet.toFixed(2)).to.equal("1.04");
   });
 });
