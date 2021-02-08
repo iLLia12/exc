@@ -134,16 +134,12 @@ export default {
       this.calculate();
     },
     calculate() {
-      let currencies = this.getCurrencies;
-      const currency1 = this.converter.currencyToChange;
-      const currency2 = this.converter.currencyToGet;
-
-      this.converter.valueToGet = new Converter(
-        currencies,
-        currency1,
-        currency2,
-        this.converter.valueToChange
-      ).get();
+      this.converter.valueToGet = (new Converter(
+          this.getCurrencies,
+          this.converter.currencyToChange,
+          this.converter.currencyToGet,
+          this.converter.valueToChange
+      )).get();
     }
   },
   watch: {
