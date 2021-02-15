@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "EditableTable"
+  name: "App",
 };
 </script>
 

@@ -1,7 +1,12 @@
 import { expect } from "chai";
-import { mount } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import Table from "@/components/EditableTable/Table.vue";
 import { DATA_TABLE_ROW } from "../data";
+import ElementUI from 'element-ui'
+
+const localVue = createLocalVue()
+
+localVue.use(ElementUI)
 
 global.localStorage = {
   errors_counter: JSON.stringify({ value: 1 }),
@@ -14,8 +19,10 @@ global.localStorage = {
 };
 
 describe("Table.vue", () => {
-  it("passes if the buy field less than 10% the origin.buy", () => {
-    const wrapper = mount(Table, {
+
+  const makeWrapper = (props = null) => {
+    return mount(Table, {
+      localVue,
       data() {
         return {
           editableRow: DATA_TABLE_ROW,
@@ -26,14 +33,12 @@ describe("Table.vue", () => {
       },
       directives: {
         loading: true
-      },
-      stubs: {
-        "el-table-column": true,
-        "el-col": true,
-        "el-row": true,
-        "el-table": true
       }
-    });
+    })
+   }
+
+  it("passes if the buy field less than 10% the origin.buy", () => {
+    let wrapper = makeWrapper();
     expect(wrapper.vm.validate()).to.equal(true);
   });
 });

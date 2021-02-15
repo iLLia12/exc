@@ -57,14 +57,14 @@ export let CONVERTER = {
 };
 
 export let DATA_TABLE_ROW = {
+  base_ccy: "UAH",
+  buy: "21.95000",
+  ccy: "USD",
+  origin: {
     base_ccy: "UAH",
-    buy: "21.95000",
+    buy: "27.95000",
     ccy: "USD",
-    origin: {
-        base_ccy: "UAH",
-        buy: "27.95000",
-        ccy: "USD",
-        sale: "28.35000"
-    },
     sale: "28.35000"
+  },
+  sale: "28.35000"
 };

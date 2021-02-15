@@ -26,17 +26,23 @@ export default class {
   value() {
     return this.buffer;
   }
-  
+
   /**
    * TODO::a temporary solution, refactoring is needed
    */
   get() {
     this.currencies.every(o => {
-      if (o["base_ccy"] === this.currencyToChange && o["ccy"] === this.currencyToGet) {
+      if (
+        o["base_ccy"] === this.currencyToChange &&
+        o["ccy"] === this.currencyToGet
+      ) {
         this.buffer = this.valueToChange / parseFloat(o["sale"]);
         return false;
       }
-      if (o["base_ccy"] === this.currencyToGet && o["ccy"] === this.currencyToChange) {
+      if (
+        o["base_ccy"] === this.currencyToGet &&
+        o["ccy"] === this.currencyToChange
+      ) {
         this.buffer = this.valueToChange * parseFloat(o["buy"]);
         return false;
       }

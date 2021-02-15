@@ -118,10 +118,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("converter", [
-      "setCurrencies",
-      "setCurrencyOptions"
-    ]),
+    ...mapActions("converter", ["setCurrencies", "setCurrencyOptions"]),
     isEditIconVisible(scope, columnName) {
       return (
         this.hoveredRow &&

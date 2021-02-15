@@ -38,14 +38,14 @@
           </div>
         </el-col>
         <el-col
-          class="swap-button mt15 d-flex justify-center"
+          class="swap-button-wrap mt15 d-flex justify-center"
           :xs="{ span: 24, offset: 0 }"
           :sm="{ span: 4, offset: 0 }"
           :md="{ span: 4, offset: 0 }"
           :lg="{ span: 4, offset: 0 }"
           :xl="{ span: 4, offset: 0 }"
         >
-          <el-button type="primary" size="mini" round @click="swap()">
+          <el-button class="swap-button" type="primary" size="mini" round @click="swap()">
             <img
               src="../assets/images/exchange.png"
               alt=""
@@ -102,7 +102,7 @@
 import { mapGetters } from "vuex";
 import Converter from "../services/converter";
 
-const CONVERTER = {
+export const CONVERTER = {
   valueToChange: "",
   valueToGet: "",
   currencyToChange: "",
@@ -134,12 +134,12 @@ export default {
       this.calculate();
     },
     calculate() {
-      this.converter.valueToGet = (new Converter(
-          this.getCurrencies,
-          this.converter.currencyToChange,
-          this.converter.currencyToGet,
-          this.converter.valueToChange
-      )).get();
+      this.converter.valueToGet = new Converter(
+        this.getCurrencies,
+        this.converter.currencyToChange,
+        this.converter.currencyToGet,
+        this.converter.valueToChange
+      ).get();
     }
   },
   watch: {
@@ -173,7 +173,7 @@ export default {
   padding-top: 50px;
 }
 @media (max-width: 767px) {
-  .swap-button {
+  .swap-button-wrap {
     margin: 20px 0 0 0;
   }
   .swap-button-img {
